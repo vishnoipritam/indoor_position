@@ -1,0 +1,85 @@
+import numpy as np # linear algebra
+import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+from glob import glob
+import tensorflow as tf
+from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+# Input data files are available in the "../input/" directory.
+# For example, running this (by clicking run or pressing Shift+Enter) will list the files in the input directory
+
+import os
+print(os.listdir("E:\data24\A_DeviceMotion_data\A_DeviceMotion_data"))
+
+
+
+#load data
+folders = glob('E:\data24\A_DeviceMotion_data\A_DeviceMotion_data/*_*')
+folders = [s for s in folders if "csv" not in s]
+df_all_list = []
+activity_codes = {'dws':0,'jog':1,'sit':2,'std':3,'ups':4,'wlk':5}
+activity_types = list(activity_codes.keys())
+
+for j in folders:
+    #print('j',j)
+    print(j)
+    csv = glob(j + '/*')
+    for i in csv:
+        df = pd.read_csv(i)
+        df['activity'] = activity_codes[j[50:53]]
+        df['sub_num'] = i[len(j)+5:-4]
+        expnum = np.zeros(df.shape[0])
+        df_all_list.append(df)
+print(df_all_list)
+df_all = pd.concat(df_all_list,axis=0)
+df_all = df_all.drop('Unnamed: 0',axis=1)
+df_all = df_all.drop(df.loc[:,'rotationRate.x':'rotationRate.z'].columns,axis=1)
+print(df_all.shape)
+print(df_all.columns)
+df_all.to_csv('E:\data24\exported_data1.csv', index=False)
+
+#visualization 
+for act in activity_types:
+    plt.subplot('61'+str(activity_codes[act]))
+    plt.subplots_adjust(hspace=1.0)
+    df = df_all[(df_all['sub_num']=='1') & (df_all['activity']==activity_codes[act])]
+    plt.title(act)
+    plt.plot(df['userAcceleration.z'][:400])
+    plt.xticks([]) # turn off x labels
+    plt.yticks([])  # turn off y labels
+    
+    
+    
+    #data_Preprocessing 
+    segment_size = 400
+data_all_x_list = []
+data_all_y_list = []
+for j in folders:
+    #print('j',j)
+    csv = glob(j + '/*')
+    for i in csv:
+        df = pd.read_csv(i)
+        df = df.drop('Unnamed: 0',axis=1)
+        win_count = int(df.shape[0]/segment_size)
+        data_x = np.zeros((win_count,segment_size,df.shape[1]))
+        data_y = np.zeros(win_count)
+        for c in range(win_count):
+            start_idx = c*segment_size
+            end_idx = start_idx + segment_size
+            data_x[c,:,:] = df[start_idx:end_idx].values
+            data_y[:] = activity_codes[j[50:53]]
+        data_all_x_list.append(data_x)
+        data_all_y_list.append(data_y)
+data_all_x = np.concatenate(data_all_x_list,axis=0)
+data_all_y = np.concatenate(data_all_y_list,axis=0)
+data_all_y = data_all_y.astype(int)
+print(data_all_x.shape)
+print(data_all_y.shape)
+
+
+#data_all_y.to_csv('E:\data24\exported_data.csv', index=False)
+
+
+#np.savetxt('E:\data24\exported_data.csv',data_all_x ,delimiter=',')
+
+
+
