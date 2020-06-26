@@ -28,7 +28,6 @@ Required-by: Theano, tensorflow, tensorboard, tables, seaborn, scikit-learn, PyW
 
 
 
-link to data set for training: https://www.kaggle.com/malekzadeh/motionsense-dataset?select=A_DeviceMotion_data
 
 
 
@@ -57,3 +56,12 @@ To run the following set of codes you have to make some changes which as follows
 •	In har.py file , in line 19 you have to give the location of the dataset which is used to train the model.
 •	In har.py file you have to count the string of the location in which you have stored the training data as in my case it starts from 50 to 53 and same goes with the line 64 in har.py file.
 •	And in har.py line 122 you to give the location where your pretrained model is stored 
+
+
+
+
+link to data set for training: https://www.kaggle.com/malekzadeh/motionsense-dataset?select=A_DeviceMotion_data
+
+
+link for the pre-trained model : https://icedrive.net/0/b6fwinf2Ls
+
