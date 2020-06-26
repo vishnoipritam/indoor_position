@@ -28,6 +28,7 @@ Required-by: Theano, tensorflow, tensorboard, tables, seaborn, scikit-learn, PyW
 
 
 
+link to data set for training: https://www.kaggle.com/malekzadeh/motionsense-dataset?select=A_DeviceMotion_data
 
 
 
