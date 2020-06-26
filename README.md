@@ -65,3 +65,4 @@ link to data set for training: https://www.kaggle.com/malekzadeh/motionsense-dat
 
 link for the pre-trained model : https://icedrive.net/0/b6fwinf2Ls
 
+video of working model link: https://icedrive.net/0/1bv2jsFdiS
