@@ -1,4 +1,8 @@
 # indoor_position
+PROBLEM STATEMENT :
+
+Building an Indoor positioning systems (IPS) which  enable locating the position of  objects or people within buildings(malls, hospitals etc.) by using Human Activity (walking, upstairing etc.)
+
 Instruction to run and Packages details:
 •	Name: tensorflow
               Version: 1.12.0
